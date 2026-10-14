@@ -1,0 +1,150 @@
+From 5b90fd7ed555a197e2e13271f8b898492b30b5d8 Mon Sep 17 00:00:00 2001
+From: rishabnaveen <rishab71759@gmail.com>
+Date: Wed, 14 Oct 2026 09:00:29 +0530
+Subject: [PATCH 1/3] LAB5: Commit 1 - Initial reports and security fixes via
+ Bandit
+
+---
+ LAB5/reports_before/bandit_report.txt | 72 +++++++++++++++++++++++++++
+ LAB5/reports_before/flake8_report.txt | 11 ++++
+ LAB5/reports_before/pylint_report.txt | 31 ++++++++++++
+ 3 files changed, 114 insertions(+)
+ create mode 100644 LAB5/reports_before/bandit_report.txt
+ create mode 100644 LAB5/reports_before/flake8_report.txt
+ create mode 100644 LAB5/reports_before/pylint_report.txt
+
+diff --git a/LAB5/reports_before/bandit_report.txt b/LAB5/reports_before/bandit_report.txt
+new file mode 100644
+index 0000000..9bbb273
+--- /dev/null
++++ b/LAB5/reports_before/bandit_report.txt
+@@ -0,0 +1,72 @@
++Run started:2026-10-14 03:09:59.945398+00:00
++
++Test results:
++>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
++   Severity: Low   Confidence: High
++   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
++   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
++   Location: .\hospital_patient_system.py:24:4
++23	        patient_records[p_id]["is_admitted"] = False
++24	    except:
++25	        pass
++26	
++
++--------------------------------------------------
++>> Issue: [B307:blacklist] Use of possibly insecure function - consider using safer ast.literal_eval.
++   Severity: Medium   Confidence: High
++   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
++   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b307-eval
++   Location: .\hospital_patient_system.py:40:12
++39	    base_bill = patient_records[p_id]["bill"]
++40	    total = eval(formula_expr)
++41	    return total
++
++--------------------------------------------------
++>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
++   Severity: High   Confidence: High
++   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
++   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
++   Location: .\hospital_patient_system.py:45:11
++44	def generate_patient_hash(p_id):
++45	    return hashlib.md5(p_id.encode()).hexdigest()
++46	
++
++--------------------------------------------------
++>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
++   Severity: Low   Confidence: High
++   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
++   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
++   Location: .\hospital_patient_system.py:49:11
++48	def generate_ward_token():
++49	    return random.randint(1000, 9999)
++50	
++
++--------------------------------------------------
++>> Issue: [B605:start_process_with_a_shell] Starting a process with a shell, possible injection detected, security issue.
++   Severity: High   Confidence: High
++   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
++   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b605_start_process_with_a_shell.html
++   Location: .\hospital_patient_system.py:56:4
++55	    f.close()
++56	    os.system("echo Patient ledger exported to: " + filename)
++57	
++
++--------------------------------------------------
++
++Code scanned:
++	Total lines of code: 59
++	Total lines skipped (#nosec): 0
++	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
++
++Run metrics:
++	Total issues (by severity):
++		Undefined: 0
++		Low: 2
++		Medium: 1
++		High: 2
++	Total issues (by confidence):
++		Undefined: 0
++		Low: 0
++		Medium: 0
++		High: 5
++Files skipped (0):
+diff --git a/LAB5/reports_before/flake8_report.txt b/LAB5/reports_before/flake8_report.txt
+new file mode 100644
+index 0000000..8292aec
+--- /dev/null
++++ b/LAB5/reports_before/flake8_report.txt
+@@ -0,0 +1,11 @@
++hospital_patient_system.py:4:1: F401 'math' imported but unused
++hospital_patient_system.py:7:80: E501 line too long (85 > 79 characters)
++hospital_patient_system.py:8:80: E501 line too long (91 > 79 characters)
++hospital_patient_system.py:9:80: E501 line too long (93 > 79 characters)
++hospital_patient_system.py:16:80: E501 line too long (90 > 79 characters)
++hospital_patient_system.py:24:5: E722 do not use bare 'except'
++hospital_patient_system.py:29:5: F841 local variable 'bed_charge' is assigned to but never used
++hospital_patient_system.py:30:34: E711 comparison to None should be 'if cond is None:'
++hospital_patient_system.py:39:5: F841 local variable 'base_bill' is assigned to but never used
++hospital_patient_system.py:72:80: E501 line too long (83 > 79 characters)
++hospital_patient_system.py:80:7: W292 no newline at end of file
+diff --git a/LAB5/reports_before/pylint_report.txt b/LAB5/reports_before/pylint_report.txt
+new file mode 100644
+index 0000000..050a8a6
+--- /dev/null
++++ b/LAB5/reports_before/pylint_report.txt
+@@ -0,0 +1,31 @@
++************* Module hospital_patient_system
++hospital_patient_system.py:80:0: C0304: Final newline missing (missing-final-newline)
++hospital_patient_system.py:1:0: C0114: Missing module docstring (missing-module-docstring)
++hospital_patient_system.py:13:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:13:0: C0103: Function name "admitPatient" doesn't conform to snake_case naming style (invalid-name)
++hospital_patient_system.py:13:0: W0102: Dangerous default value [] as argument (dangerous-default-value)
++hospital_patient_system.py:17:22: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
++hospital_patient_system.py:21:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:24:4: W0702: No exception type(s) specified (bare-except)
++hospital_patient_system.py:28:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:30:7: C0121: Comparison 'patient_records.get(p_id) == None' should be 'patient_records.get(p_id) is None' (singleton-comparison)
++hospital_patient_system.py:32:4: R1703: The if statement can be replaced with 'return bool(test)' (simplifiable-if-statement)
++hospital_patient_system.py:32:4: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
++hospital_patient_system.py:29:4: W0612: Unused variable 'bed_charge' (unused-variable)
++hospital_patient_system.py:38:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:40:12: W0123: Use of eval (eval-used)
++hospital_patient_system.py:39:4: W0612: Unused variable 'base_bill' (unused-variable)
++hospital_patient_system.py:44:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:48:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:52:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:53:8: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
++hospital_patient_system.py:53:8: R1732: Consider using 'with' for resource-allocating operations (consider-using-with)
++hospital_patient_system.py:59:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:59:21: W0621: Redefining name 'patient_records' from outer scope (line 6) (redefined-outer-name)
++hospital_patient_system.py:61:8: W0612: Unused variable 'p' (unused-variable)
++hospital_patient_system.py:67:0: C0116: Missing function or method docstring (missing-function-docstring)
++hospital_patient_system.py:4:0: W0611: Unused import math (unused-import)
++
++-----------------------------------
++Your code has been rated at 5.19/10
++
+-- 
+2.51.1.windows.1
+

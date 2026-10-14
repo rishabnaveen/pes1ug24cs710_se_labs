@@ -1,0 +1,27 @@
+From 80466dc323546146ae4d5139ad4ed0d4780a5b73 Mon Sep 17 00:00:00 2001
+From: rishabnaveen <rishab71759@gmail.com>
+Date: Wed, 14 Oct 2026 09:00:39 +0530
+Subject: [PATCH 3/3] LAB5: Commit 3 - PEP 8 formatting via Flake8 and
+ after-fix reports
+
+---
+ LAB5/reports_after/bandit_report.txt | 0
+ LAB5/reports_after/flake8_report.txt | 0
+ LAB5/reports_after/pylint_report.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 LAB5/reports_after/bandit_report.txt
+ create mode 100644 LAB5/reports_after/flake8_report.txt
+ create mode 100644 LAB5/reports_after/pylint_report.txt
+
+diff --git a/LAB5/reports_after/bandit_report.txt b/LAB5/reports_after/bandit_report.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/LAB5/reports_after/flake8_report.txt b/LAB5/reports_after/flake8_report.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/LAB5/reports_after/pylint_report.txt b/LAB5/reports_after/pylint_report.txt
+new file mode 100644
+index 0000000..e69de29
+-- 
+2.51.1.windows.1
+
